@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partials/header') %>
+        <title>HamroCHAT - Home</title>
+</head>
+
+<body>
+    <%- include('partials/chatHeader') %>
+        <main>
+            <div id="goup">
+                <a href="#">
+                    <!-- Icon made by Pixel perfect from www.flaticon.com -->
+                    <img src="/imgs/up.png" alt="TOP">
+                </a>
+            </div>
+            <section id="chat">
+                <%- include('partials/help')%>
+                    <div id="chat-container">
+                        <div id="chat-header">
+                            <div id="chat-header-img">
+                                <i class="far fa-user"></i>
+                                <!-- <img src="/imgs/me.JPG" alt="user-img"> -->
+                            </div>
+                            <div id="chat-header-name">
+                                <!-- User name -->
+                                <%=currentUser.firstName+" "+currentUser.lastName%>
+                    </div>
+                    <!-- Green if online, otherwise offline -->
+                    <div id=" chat-header-onoff">
+                                    <img src="/imgs/online.svg" alt="Active">
+                            </div>
+                        </div>
+                        <div id="chat-content">
+                            <div id="chat-search">
+                                <form action="/HamroCHAT-home/<%=currentUser._id%>">
+                                    <div id="chat-search-image">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <input id="chat-search-bar" type="text" name="email"
+                                        placeholder="Enter email ID to add user!">
+                                    <button id="add-user">Add User</button>
+                                </form>
+                            </div>
+                            <!-- firends to chat to -->
+                            <div id="chat-users">
+                                <% const contacts=currentUser.contacts%>
+                                    <%=//console.log("User's contacts:")%>
+                                        <%=//console.log(contacts)%>
+                                            <%for(let x of contacts){%>
+                                                <!-- Extracting contact info from database -->
+                                                <%const data=allUsers.filter(d=>{return d.email==x.email})%>
+                                                    <div class="user">
+                                                        <a
+                                                            href="/HamroCHAT-message/<%=currentUser._id%>/<%=data[0]._id%>">
+                                                            <div class="user-img">
+                                                                <i class="far fa-user"></i>
+                                                            </div>
+                                                            <div class="name-status">
+                                                                <div class="name">
+                                                                    <%=data[0].firstName+' '+data[0].lastName%>
+                                                                </div>
+                                                                <div class="status">
+                                                                    <%if(data[0].isOnline==true){%>
+                                                                        <img src="/imgs/online.svg" class="status-img"
+                                                                            alt="Active-img">
+                                                                        <span>Active</span>
+                                                                        <%}else{%>
+                                                                            <img src="/imgs/offline.svg"
+                                                                                class="status-img" alt="Active-img">
+                                                                            <span>Offline</span>
+                                                                            <%}%>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                        <div class="user-chat">
+                                                            <a
+                                                                href="/HamroCHAT-user-profile/<%=currentUser._id%>/<%=data[0]._id%>"><i
+                                                                    class="far fa-address-card"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <%}%>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+            <script src="/validate.js"></script>
+        </main>
+</body>
+
+</html>
